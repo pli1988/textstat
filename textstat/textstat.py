@@ -12,6 +12,7 @@ from collections import Counter
 import pkg_resources
 import repoze.lru
 from pyphen import Pyphen
+from nltk.tokenize import sent_tokenize
 
 easy_word_set = set([
     ln.decode('utf-8').strip() for ln in
@@ -172,7 +173,8 @@ class textstatistics:
         Sentence count of a text
         """
         ignore_count = 0
-        sentences = re.split(r' *[\.\?!][\'"\)\]]*[ |\n](?=[A-Z])', text)
+        # sentences = re.split(r' *[\.\?!][\'"\)\]]*[ |\n](?=[A-Z])', text)
+        sentences = sent_tokenize(text)
         for sentence in sentences:
             if self.lexicon_count(sentence) <= 2:
                 ignore_count += 1
